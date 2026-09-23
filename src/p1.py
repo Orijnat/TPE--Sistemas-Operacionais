@@ -1,11 +1,9 @@
-#!/usr/bin/env python3
 """
 P1 - Processo filho / trabalhador.
 
 Le uma lista de IDs de um arquivo texto, distribui os IDs entre N threads
 de trabalho usando exclusao mutua, consulta uma API mockada para cada
-ID e grava o resultado em um arquivo de log, protegendo a escrita
-concorrente com outro mutex.
+ID e grava o resultado em um arquivo de log.
 
 Codigos de saida:
     0 -> sucesso: todos os IDs foram processados e logados sem erro
@@ -34,8 +32,8 @@ class Enriquecedor:
         self.ids = ids
         self.n_threads = n_threads
         self.log_path = log_path
-        self.indice_lock = threading.Lock()   # mutex: distribuicao dos IDs
-        self.log_lock = threading.Lock()      # mutex: escrita no log
+        self.indice_lock = threading.Lock()  
+        self.log_lock = threading.Lock()      
         self.proximo_indice = 0
         self.erros = []
 
@@ -53,7 +51,7 @@ class Enriquecedor:
             f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}, "
             f"{thread_nome}, {id_processado}, {json.dumps(resposta_json)}\n"
         )
-        with self.log_lock:  # secao critica: escrita no arquivo compartilhado
+        with self.log_lock: 
             with open(self.log_path, "a", encoding="utf-8") as f:
                 f.write(linha)
 
@@ -103,7 +101,6 @@ def main():
         print(f"Arquivo de lista nao encontrado: {lista_path}", file=sys.stderr)
         sys.exit(1)
 
-    # remove log de execucao anterior para nao acumular linhas entre testes
     if os.path.exists(log_path):
         os.remove(log_path)
 
