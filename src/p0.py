@@ -120,13 +120,12 @@ def main():
     print("\n" + "=" * 90)
     print("RELATORIO CONSOLIDADO")
     print("=" * 90)
-    print(f"{'Lista':<10}{'IDs':<8}{'N threads':<12}{'Tempo P1 (s)':<15}{'Log OK':<10}{'Status'}")
-    print("-" * 90)
+    print(f"{'Lista':<10}{'IDs':<8}{'N threads':<12}{'Tempo P1 (s)'}")
+    print("-" * 60)
     for r in resultados:
-        log_ok = "sim" if r["linhas_log"] == r["total_ids"] else "NAO"
         print(
             f"{r['lista']:<10}{r['total_ids']:<8}{r['n_threads']:<12}"
-            f"{str(r['tempo_interno_p1_s']):<15}{log_ok:<10}{r['status']}"
+            f"{str(r['tempo_interno_p1_s'])}"
         )
 
     caminho_relatorio = os.path.join(DIR_STATS, "relatorio_consolidado.json")
